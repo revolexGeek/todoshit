@@ -1,0 +1,3 @@
+<template>
+  <NoteList></NoteList>
+</template>
