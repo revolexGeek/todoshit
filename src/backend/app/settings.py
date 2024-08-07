@@ -13,6 +13,8 @@ DEBUG = os.getenv("DJANGO_DEBUG", True)
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost",
     "http://localhost:3000",
@@ -24,26 +26,28 @@ CORS_ALLOWED_ORIGINS = [
     "https://localhost:80",
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+
+
 env_cors_allowed_origins = os.getenv("DJANGO_CORS_ALLOWED_ORIGINS", False)
 if env_cors_allowed_origins:
-    for origin in env_cors_allowed_origins.split(","):
+    for origin in env_cors_allowed_origins.split(","):  # type: ignore
         CORS_ALLOWED_ORIGINS.append(origin)
 
 env_allowed_hosts = os.getenv("DJANGO_ALLOWED_HOSTS", False)
 if env_allowed_hosts:
-    for host in env_allowed_hosts.split(","):
+    for host in env_allowed_hosts.split(","):  # type: ignore
         ALLOWED_HOSTS.append(host)
 
 
 REST_FRAMEWORK = {
-    "UPLOADED_FILES_USE_URL": False,
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.BasicAuthentication",
-    ],
-    "DEFAULT_PERMISSION_CLASSES": [],
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 10,
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
@@ -64,24 +68,34 @@ DJANGO_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
 ]
 
 THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
     "dj_rest_auth",
+    "dj_rest_auth.registration",
     "corsheaders",
     "drf_spectacular",
     "drf_spectacular_sidecar",
 ]
 
+
 LOCAL_APPS = []
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
+SITE_ID = 1
+
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",

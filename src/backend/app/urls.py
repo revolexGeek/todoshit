@@ -12,7 +12,8 @@ THIRD_PARTY_APPS_URLS = [
         SpectacularSwaggerView.as_view(url_name="schema"),
         name="swagger-ui",
     ),
-    path("auth/", include("dj_rest_auth.urls")),
+    path("api/auth/", include("dj_rest_auth.urls")),
+    path("api/auth/register/", include("dj_rest_auth.registration.urls")),
 ]
 
 LOCAL_APPS_URLS = []

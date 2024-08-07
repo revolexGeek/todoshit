@@ -6,8 +6,11 @@
           class="flex flex-row items-center flex-wrap gap-[16px] justify-between w-full"
         >
           <div class="flex flex-row items-center gap-[12px] flex-wrap">
-            <h1 class="text-xl font-bold">Todoshit</h1>
-            <div class="flex flex-row items-center gap-[8px] flex-wrap">
+            <NuxtLink href="/" class="text-xl font-bold">Todoshit</NuxtLink>
+            <div
+              class="flex flex-row items-center gap-[8px] flex-wrap"
+              v-if="status === 'authenticated'"
+            >
               <UButton
                 label="Work"
                 size="xs"
@@ -31,6 +34,12 @@
           </div>
           <div class="h-fit gap-[12px] items-center flex flex-row">
             <UButton
+              to="/signout"
+              color="gray"
+              v-if="status === 'authenticated'"
+              icon="i-heroicons-link-slash-20-solid"
+            ></UButton>
+            <UButton
               to="https://github.com/revolexGeek/todoshit"
               target="_blank"
               icon="i-heroicons-sparkles-20-solid"
@@ -39,7 +48,7 @@
             ></UButton>
             <Sidebar></Sidebar>
             <ThemeToggle></ThemeToggle>
-            <FastCommand></FastCommand>
+            <FastCommand v-if="status === 'authenticated'"></FastCommand>
           </div>
         </div>
       </template>
@@ -49,3 +58,7 @@
     </UCard>
   </UContainer>
 </template>
+
+<script setup lang="ts">
+const { status } = useAuth();
+</script>
