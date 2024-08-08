@@ -13,12 +13,28 @@ django-cors-headers = "^4.4.0"
 dj-rest-auth = {extras = ["with-social"], version = "^6.0.0"}
 python-dotenv = "^1.0.1"
 psycopg2-binary = "^2.9.9"
-drf-spectacular = {extras = ["sidecar"], version = "^0.27.2"}
+django-filter = "^24.3"
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+plugins = ["mypy_django_plugin.main", "mypy_drf_plugin.main"]
+
+[tool.django-stubs]
+django_version = "5.0.7"
+django_apps = ["app", "core"]
+django_settings_module = "app.settings"
+ignore_missing_settings = true
+ignore_missing_model_attributes = true
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.5.6"
 mypy = "^1.11.1"
 isort = "^5.13.2"
+drf-spectacular = {extras = ["sidecar"], version = "^0.27.2"}
+django-stubs = "^5.0.4"
+djangorestframework-stubs = "^3.15.0"
 
 [build-system]
 requires = ["poetry-core"]

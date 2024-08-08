@@ -13,7 +13,7 @@ DEBUG = os.getenv("DJANGO_DEBUG", True)
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_VERIFICATION = "none"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost",
@@ -28,7 +28,6 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_CREDENTIALS = True
 
-
 env_cors_allowed_origins = os.getenv("DJANGO_CORS_ALLOWED_ORIGINS", False)
 if env_cors_allowed_origins:
     for origin in env_cors_allowed_origins.split(","):  # type: ignore
@@ -41,13 +40,14 @@ if env_allowed_hosts:
 
 
 REST_FRAMEWORK = {
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.TokenAuthentication",
     ),
+    "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
@@ -74,6 +74,7 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
+    "django_filters",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -85,12 +86,13 @@ THIRD_PARTY_APPS = [
 ]
 
 
-LOCAL_APPS = []
+LOCAL_APPS = [
+    "core.apps.CoreConfig",
+]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 SITE_ID = 1
-
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -171,4 +173,5 @@ USE_TZ = os.getenv("DJANGO_INTERNATIONALIZATION_USE_TZ", True)
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
 STATIC_URL = "/static/"

@@ -6,8 +6,7 @@
     <div class="w-full h-fit flex flex-col gap-[12px]">
       <p class="text-md">{{ description }}</p>
       <div class="flex flex-row flex-wrap items-center gap-[8px]">
-        <UBadge label="Срочное" color="red"></UBadge>
-        <UBadge label="До завтра" color="yellow"></UBadge>
+        <UBadge v-for="tag in tags" :key="tag.id" :label="tag.name" :color="tag.color"></UBadge>
         <UButton
           icon="i-heroicons-plus"
           size="2xs"
@@ -31,8 +30,11 @@
 </template>
 
 <script setup lang="ts">
+import type ITag from '~/types/tag';
+
 defineProps<{
   title: String;
   description: String;
+  tags: ITag[];
 }>();
 </script>

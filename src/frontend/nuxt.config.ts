@@ -41,6 +41,11 @@ export default defineNuxtConfig({
       },
     },
   },
-  modules: ["@nuxt/ui", "@nuxtjs/google-fonts", "@sidebase/nuxt-auth"],
+  modules: [
+    "@nuxt/ui",
+    "@nuxtjs/google-fonts",
+    "@sidebase/nuxt-auth",
+    "@pinia/nuxt",
+  ],
   compatibilityDate: "2024-08-05",
 });
