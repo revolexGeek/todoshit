@@ -1,0 +1,25 @@
+from django.db.models import TextChoices
+
+
+class ColorChoices(TextChoices):
+    RED = "red", "Красный"
+    ORANGE = "orange", "Оранжевый"
+    AMBER = "amber", "Янтарный"
+    YELLOW = "yellow", "Желтый"
+    LIME = "lime", "Лайм"
+    GREEN = "green", "Зеленый"
+    EMERALD = "emerald", "Изумрудный"
+    TEAL = "teal", "Тиловый"
+    CYAN = "cyan", "Голубой"
+    SKY = "sky", "Небесно-голубой"
+    BLUE = "blue", "Синий"
+    INDIGO = "indigo", "Индиго"
+    VIOLET = "violet", "Фиолетовый"
+    PURPLE = "purple", "Пурпурный"
+    FUCHSIA = "fuchsia", "Фуксия"
+    PINK = "pink", "Розовый"
+    ROSE = "rose", "Розовый"
+    GRAY = "gray", "Серый"
+    WHITE = "white", "Белый"
+    BLACK = "black", "Черный"
+    PRIMARY = "primary", "Основной"
